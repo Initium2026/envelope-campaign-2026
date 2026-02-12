@@ -160,6 +160,74 @@
         #result-title { font-size: 2rem; margin: 0 0 15px 0; color: var(--accent-2); letter-spacing: 2px; }
         #result-subtitle { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.5; color: var(--accent-2); font-weight: 500; }
         #result-code { font-family: monospace; font-size: 1rem; color: #A52A2A; border: 1px dashed #A52A2A; padding: 5px 15px; margin-bottom: 25px; letter-spacing: 1px; background: rgba(165, 42, 42, 0.05); }
+
+/* =========================================
+           ⬇️ 請將此段貼在 <style> 的最下方 ⬇️
+           [響應式設計] 手機版適配 (螢幕小於 768px 時觸發)
+           ========================================= */
+        @media (max-width: 768px) {
+            
+            /* 1. 全局調整：縮小內距，避免太擠 */
+            .page {
+                padding: 40px 15px; /* 上下 40px，左右 15px */
+            }
+
+            /* 2. 第一頁：標題字體縮小，紅包位置微調 */
+            h1.main-title {
+                font-size: 2rem; /* 手機上標題變小 */
+            }
+            .subtitle {
+                font-size: 1rem;
+                margin-top: 1.5rem;
+            }
+            .promo-envelope {
+                width: 80px;  /* 裝飾紅包變小 */
+                height: 160px;
+            }
+            .env-left { left: -10px; top: 15%; } /* 調整位置避免擋到字 */
+            .env-right { right: -10px; top: 15%; }
+
+            /* 3. 第五頁 (紅包牆)：從「橫排」變成「自動換行」 */
+            .envelope-container {
+                flex-wrap: wrap;       /* 允許換行 */
+                height: auto;          /* 高度自動撐開 */
+                margin-top: 10px;
+                gap: 15px !important;  /* 間距縮小 */
+                padding-bottom: 40px;  /* 底部留白方便滑動 */
+            }
+            .envelope-wrapper {
+                width: 45%;            /* 一行顯示兩個 (約45%寬) */
+                height: 180px !important; /* 紅包高度縮小 */
+            }
+            .envelope {
+                width: 100% !important; /* 讓紅包填滿區塊 */
+                height: 100% !important;
+            }
+            .envelope span {
+                margin-top: 55px;      /* 文字位置微調 */
+                font-size: 1.2rem;
+            }
+
+            /* 4. 第六頁 (延伸閱讀)：從「橫排」變成「直排」 */
+            .exhibition-wrapper {
+                flex-direction: column; /* 變成直向排列 */
+                justify-content: flex-start;
+                gap: 30px;
+                overflow-x: visible;    /* 取消橫向捲軸 */
+            }
+            .exhibition-item {
+                flex: 0 0 auto;         /* 取消固定寬度 */
+                width: 100%;            /* 寬度佔滿手機螢幕 */
+                max-width: 100%;
+            }
+            
+            /* 5. 彈窗調整 */
+            .popup {
+                width: 90%;
+                padding: 30px 20px;
+            }
+        }
+
     </style>
 </head>
 <body>
