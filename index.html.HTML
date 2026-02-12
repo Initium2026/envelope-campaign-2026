@@ -348,78 +348,86 @@
         { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["記者吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 }
     ];
 
-/* --- 1. 設定獎品與數量 (總數 1000 份) --- */
+/* --- 1. 設定獎品清單 (總計 5 份，每種各 1 份) --- */
     const prizeConfig = [
-        { id: 1, count: 10,  title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "EOFWEJ68" },
-        { id: 2, count: 40,  title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券（最高折 HK$300）", code: "EOFWEJ68" },
-        { id: 3, count: 50,  title: "｜金春獎｜", subtitle: "線上商店 HK$200 折價券", code: "EOFWEJ68" },
-        { id: 4, count: 150, title: "｜好運獎｜", subtitle: "線上商店 9 折券", code: "EOFWEJ68" },
-        { id: 5, count: 700, title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "EOFWEJ68" },
-        { id: 6, count: 50,  title: "｜開春獎｜", subtitle: "線上商店 HK$80折價券<br>（消費滿HK$400 才能使用）", code: "EOFWEJ68" }
+        { id: 1, title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "EOFWEJ68" },
+        { id: 2, title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券（最高折 HK$300）", code: "EOFWEJ68" },
+        { id: 3, title: "｜開春獎｜", subtitle: "線上商店 HK$80 折價券<br>（消費滿HK$400 才能使用）", code: "EOFWEJ68" },
+        { id: 4, title: "｜好運獎｜", subtitle: "線上商店 9 折券", code: "EOFWEJ68" },
+        { id: 5, title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "EOFWEJ68" }
     ];
 
-    /* --- 2. 建立抽獎池 (自動計算：1000 份獎品 + 10000 份未中獎) --- */
-    let prizePool = [];
-    
-    // (A) 放入中獎籤
-    prizeConfig.forEach(p => { 
-        for(let i=0; i < p.count; i++) { 
-            prizePool.push(p); 
-        } 
-    });
+    /* --- 2. 建立抽獎池 (僅包含上述 5 份獎品) --- */
+    let prizePool = [...prizeConfig];
 
-    // (B) 放入未中獎籤 (獎品總數的 10 倍)
-    const noWinPrize = { title: "｜未中獎｜", subtitle: "沒中獎別灰心！<br>端傳媒祝你新年快樂！", code: "" };
-    const totalPrizes = 1000;
-    const noWinCount = totalPrizes * 10; 
-
-    for(let i=0; i < noWinCount; i++) { 
-        prizePool.push(noWinPrize); 
-    }
-
-    /* --- 3. 抽獎執行函式 (包含卡控與彈窗) --- */
+    /* --- 3. 抽獎執行函式 --- */
     function drawPrize() {
-        // 檢查是否已抽過 (localStorage)
+        // (A) 限制一：一人抽一次 (檢查本機紀錄)
         if (localStorage.getItem('drawn_prize_2026')) {
-            showAlreadyPlayedPopup(); // 之前可能缺少這個函式導致沒反應
+            showAlreadyPlayedPopup();
             return;
         }
 
-        // 隨機抽選
-        const win = prizePool[Math.floor(Math.random() * prizePool.length)];
+        // (B) 限制二：檢查獎池是否還有剩 (此為模擬邏輯)
+        // 註：在純前端環境下，若要測試「抽完」效果，需手動清空 prizePool 或修改邏輯
+        if (prizePool.length === 0) {
+            showEmptyPoolPopup();
+            return;
+        }
 
-        // 填入資料
+        // (C) 執行抽選：從剩餘的獎品中隨機挑選一個
+        const luckyIdx = Math.floor(Math.random() * prizePool.length);
+        const win = prizePool[luckyIdx];
+
+        // 填入彈窗資料
         document.getElementById('result-title').innerText = win.title;
         document.getElementById('result-subtitle').innerHTML = win.subtitle;
         
         const codeElem = document.getElementById('result-code');
-        if(win.code) { 
-            codeElem.innerText = win.code; 
-            codeElem.style.display = 'block'; 
-        } else { 
-            codeElem.style.display = 'none'; 
-        }
-        
-        // 寫入已抽過紀錄
+        codeElem.innerText = win.code;
+        codeElem.style.display = 'block';
+
+        // 從當前獎池移除該獎品 (模擬單次會話中的消耗)
+        prizePool.splice(luckyIdx, 1);
+
+        // 寫入「已參加」標記
         localStorage.setItem('drawn_prize_2026', 'true');
         
         // 顯示彈窗
+        const btn = document.querySelector('#overlay .btn');
+        if(btn) btn.innerText = "瀏覽專題";
         document.getElementById('overlay').style.display = 'flex';
     }
 
-    /* --- 4. 顯示「已抽過」提示彈窗 (這是修復關鍵) --- */
+    /* --- 4. 顯示「已經抽過」彈窗 --- */
     function showAlreadyPlayedPopup() {
         document.getElementById('result-title').innerText = "提示";
         document.getElementById('result-subtitle').innerText = "每人限參加一次，您已經領取過紅包囉！";
         document.getElementById('result-code').style.display = 'none';
         
-        // 確保按鈕文字正確
         const btn = document.querySelector('#overlay .btn');
-        if(btn) btn.innerText = "前往專題";
+        if(btn) {
+            btn.innerText = "前往專題";
+            btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
+        }
         
         document.getElementById('overlay').style.display = 'flex';
     }
 
+    /* --- 5. 顯示「已經抽完」彈窗 (獎池空時觸發) --- */
+    function showEmptyPoolPopup() {
+        document.getElementById('result-title').innerText = "提示";
+        document.getElementById('result-subtitle').innerText = "已經抽完囉！";
+        document.getElementById('result-code').style.display = 'none';
+        
+        const btn = document.querySelector('#overlay .btn');
+        if(btn) {
+            btn.innerText = "前往專題";
+            btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
+        }
+        
+        document.getElementById('overlay').style.display = 'flex';
+    }
     let currentQuestions = []; let currentStep = 0;
     function switchPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const target = document.getElementById(pageId); if(target) target.classList.add('active'); document.querySelector('.container').scrollTop = 0; }
     function startChallenge() { currentQuestions = [...quizData]; currentStep = 0; renderQuiz(); switchPage('quiz-page'); }
