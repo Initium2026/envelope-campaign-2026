@@ -162,54 +162,73 @@
         #result-code { font-family: monospace; font-size: 1rem; color: #A52A2A; border: 1px dashed #A52A2A; padding: 5px 15px; margin-bottom: 25px; letter-spacing: 1px; background: rgba(165, 42, 42, 0.05); }
 
         /* =========================================
-           ⬇️ 請將此段貼在 <style> 的最下方 ⬇️
-           [手機版修正] 強制顯示紅包，並調整大小與位置
+           ⬇️ [手機版修正] 紅包位置、層級與裝飾調整 ⬇️
+           請替換原本最下方的 @media 區塊
            ========================================= */
         @media (max-width: 900px) {
-            /* 1. 取消隱藏，強制顯示紅包 */
+            /* 1. 全局調整 */
+            .page { padding: 40px 15px; }
+
+            /* 2. 紅包通用設定：強制顯示 + 降低層級 (在字後面) */
             .promo-envelope {
                 display: block !important; 
-                width: 70px;   /* 手機上紅包縮小 */
+                width: 70px;
                 height: 140px;
+                z-index: 1 !important; /* 層級設低，確保在背景 */
             }
 
-            /* 2. 調整左側紅包位置 */
+            /* 3. 左側紅包：維持在左上 (約 18% 高度) */
             .env-left {
-                left: 5%;      /* 稍微靠邊一點 */
-                top: 20%;      /* 往上移，避開標題 */
+                left: -10px;   /* 稍微貼邊 */
+                top: 18%;
             }
 
-            /* 3. 調整右側紅包位置 */
+            /* 4. 右側紅包：移至右下 (約底部 15% 位置) -> 形成斜對角 */
             .env-right {
-                right: 5%;     /* 稍微靠邊一點 */
-                top: 20%;      /* 往上移，避開標題 */
+                right: -10px;           /* 稍微貼邊 */
+                top: auto !important;   /* 取消原本的頂部定位 */
+                bottom: 12%;            /* 設定到底部的距離 (在按鈕下方) */
             }
 
-            /* 4. 右上角雲紋位置調整 */
-            .decor-cloud-top-new {
-                top: 0 !important;      /* 從 -30px 改為 0，讓它往下移回到畫面內 */
-                right: 0 !important;    /* 確保靠右 */
-                width: 45vw;            /* 手機版稍微放大寬度，視覺比較平衡 */
-                max-width: 200px;       /* 限制最大寬度，避免遮到標題 */
+            /* 5. 關鍵：提升文字與按鈕層級，確保壓在紅包上面 */
+            .torn-label, h1.main-title, p.subtitle, .btn {
+                position: relative;     /* 開啟定位才能設定 z-index */
+                z-index: 10;            /* 層級設高，蓋過紅包 */
             }
 
-            /* 5. 第5頁標題避開 Logo */
-            #page5 h1 {
-                margin-top: 50px !important;   /* 往下推，留出空間給 Logo */
-                font-size: 1.6rem !important;  /* 字體縮小 */
-                line-height: 1.4 !important;   /* 增加行距，讓換行好看點 */
-                padding: 0 10px;               /* 左右留點邊距 */
-                display: block;                /* 確保區塊顯示 */
-                width: 100%;                   /* 寬度佔滿 */
+            /* 6. 其他手機版微調 (標題、Logo、彈窗等) */
+            h1.main-title {
+                font-size: 2rem;
+                margin-top: 50px !important; /* 避開 Logo */
+            }
+            .subtitle { font-size: 1rem; margin-top: 1.5rem; }
+            
+            .decor-cloud-top-new { /* 右上角雲紋 */
+                top: 0 !important; right: 0 !important;
+                width: 45vw; max-width: 200px;
             }
 
-            /* 6. 彈窗 (Popup) 左右留白調整 */
+            /* 第5頁排版修正 */
+            .envelope-container {
+                flex-wrap: wrap; height: auto; margin-top: 10px;
+                gap: 15px !important; padding-bottom: 40px;
+            }
+            .envelope-wrapper { width: 45%; height: 180px !important; }
+            .envelope { width: 100% !important; height: 100% !important; }
+            .envelope span { margin-top: 55px; font-size: 1.2rem; }
+            #page5 h1 { margin-top: 50px !important; font-size: 1.6rem !important; width: 100%; }
+
+            /* 第6頁排版修正 */
+            .exhibition-wrapper {
+                flex-direction: column; justify-content: flex-start;
+                gap: 30px; overflow-x: visible;
+            }
+            .exhibition-item { flex: 0 0 auto; width: 100%; max-width: 100%; }
+
+            /* 彈窗修正 */
             .popup {
-                width: 85% !important;       /* 寬度改為 85%，左右各留 7.5% 空間 */
-                max-width: 360px !important; /* 限制最大寬度，避免在平板上太大 */
-                padding: 30px 20px !important; /* 稍微調整內距 */
-                box-sizing: border-box;      /* 確保 padding 不會撐破寬度 */
-                border-radius: 12px;         /* 增加一點圓角，看起來更柔和 */
+                width: 85% !important; max-width: 360px !important;
+                padding: 30px 20px !important; box-sizing: border-box; border-radius: 12px;
             }
         }
     </style>
