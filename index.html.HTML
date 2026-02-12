@@ -342,13 +342,14 @@
 </div>
 
 <script>
+    /* --- 1. 題目數據 (保持一行，無斷行) --- */
     const quizData = [
         { "q": "2026年歲次是什麼？", "a": ["龍年", "蛇年", "馬年", "羊年"], "correct": 2 },
         { "q": "以下對於端傳媒的敘述，哪一個不是正確的？", "a": ["邁向成立第11年", "端的讀者遍布全球100+個國家與地區", "2025年榮獲29項新聞獎", "以上皆是"], "correct": 3 },
         { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["記者吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 }
     ];
 
-/* --- 1. 設定獎品清單 (總計 5 份，每種各 1 份) --- */
+    /* --- 2. 獎品清單設定 --- */
     const prizeConfig = [
         { id: 1, title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "EOFWEJ68" },
         { id: 2, title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券（最高折 HK$300）", code: "EOFWEJ68" },
@@ -357,79 +358,96 @@
         { id: 5, title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "EOFWEJ68" }
     ];
 
-    /* --- 2. 建立抽獎池 (僅包含上述 5 份獎品) --- */
-    let prizePool = [...prizeConfig];
+    /* --- 3. 核心持久化邏輯：確保獎品抽完不補回 --- */
+    function getStoredPool() {
+        let pool = localStorage.getItem('prize_pool_status_2026');
+        if (!pool) {
+            // 第一次執行，將 5 個獎品的 ID 存入
+            const initialPool = [1, 2, 3, 4, 5];
+            localStorage.setItem('prize_pool_status_2026', JSON.stringify(initialPool));
+            return initialPool;
+        }
+        return JSON.parse(pool);
+    }
 
-    /* --- 3. 抽獎執行函式 --- */
+    /* --- 4. 抽獎執行函式 --- */
     function drawPrize() {
-        // (A) 限制一：一人抽一次 (檢查本機紀錄)
+        // (A) 先檢查這個人是不是抽過了
         if (localStorage.getItem('drawn_prize_2026')) {
             showAlreadyPlayedPopup();
             return;
         }
 
-        // (B) 限制二：檢查獎池是否還有剩 (此為模擬邏輯)
-        // 註：在純前端環境下，若要測試「抽完」效果，需手動清空 prizePool 或修改邏輯
-        if (prizePool.length === 0) {
+        // (B) 獲取當前剩餘獎池
+        let currentPool = getStoredPool();
+
+        // (C) 關鍵：如果獎池空了，顯示「已經抽完囉」
+        if (currentPool.length === 0) {
             showEmptyPoolPopup();
             return;
         }
 
-        // (C) 執行抽選：從剩餘的獎品中隨機挑選一個
-        const luckyIdx = Math.floor(Math.random() * prizePool.length);
-        const win = prizePool[luckyIdx];
+        // (D) 隨機抽選
+        const luckyIdx = Math.floor(Math.random() * currentPool.length);
+        const winId = currentPool[luckyIdx];
+        const win = prizeConfig.find(p => p.id === winId);
 
-        // 填入彈窗資料
+        // 顯示中獎內容
         document.getElementById('result-title').innerText = win.title;
         document.getElementById('result-subtitle').innerHTML = win.subtitle;
-        
         const codeElem = document.getElementById('result-code');
         codeElem.innerText = win.code;
         codeElem.style.display = 'block';
 
-        // 從當前獎池移除該獎品 (模擬單次會話中的消耗)
-        prizePool.splice(luckyIdx, 1);
+        // (E) 更新獎池：從剩餘名單移除，並存回 localStorage
+        currentPool.splice(luckyIdx, 1);
+        localStorage.setItem('prize_pool_status_2026', JSON.stringify(currentPool));
 
-        // 寫入「已參加」標記
+        // (F) 標記使用者已參加
         localStorage.setItem('drawn_prize_2026', 'true');
         
         // 顯示彈窗
         const btn = document.querySelector('#overlay .btn');
-        if(btn) btn.innerText = "瀏覽專題";
-        document.getElementById('overlay').style.display = 'flex';
-    }
-
-    /* --- 4. 顯示「已經抽過」彈窗 --- */
-    function showAlreadyPlayedPopup() {
-        document.getElementById('result-title').innerText = "提示";
-        document.getElementById('result-subtitle').innerText = "每人限參加一次，您已經領取過紅包囉！";
-        document.getElementById('result-code').style.display = 'none';
-        
-        const btn = document.querySelector('#overlay .btn');
         if(btn) {
-            btn.innerText = "前往專題";
+            btn.innerText = "瀏覽專題";
             btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
         }
-        
         document.getElementById('overlay').style.display = 'flex';
     }
 
-    /* --- 5. 顯示「已經抽完」彈窗 (獎池空時觸發) --- */
+    /* --- 5. 彈窗提示定義 --- */
     function showEmptyPoolPopup() {
         document.getElementById('result-title').innerText = "提示";
         document.getElementById('result-subtitle').innerText = "已經抽完囉！";
         document.getElementById('result-code').style.display = 'none';
-        
         const btn = document.querySelector('#overlay .btn');
         if(btn) {
             btn.innerText = "前往專題";
             btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
         }
-        
         document.getElementById('overlay').style.display = 'flex';
     }
+
+    function showAlreadyPlayedPopup() {
+        document.getElementById('result-title').innerText = "提示";
+        document.getElementById('result-subtitle').innerText = "每人限參加一次，您已經領取過紅包囉！";
+        document.getElementById('result-code').style.display = 'none';
+        const btn = document.querySelector('#overlay .btn');
+        if(btn) {
+            btn.innerText = "前往專題";
+            btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
+        }
+        document.getElementById('overlay').style.display = 'flex';
+    }
+
+    /* --- 6. 頁面切換與問答邏輯 (保留您最正確的設定) --- */
     let currentQuestions = []; let currentStep = 0;
-    function switchPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const target = document.getElementById(pageId); if(target) target.classList.add('active'); document.querySelector('.container').scrollTop = 0; }
+    function switchPage(pageId) { 
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
+        const target = document.getElementById(pageId); 
+        if(target) target.classList.add('active'); 
+        document.querySelector('.container').scrollTop = 0; 
+    }
     function startChallenge() { currentQuestions = [...quizData]; currentStep = 0; renderQuiz(); switchPage('quiz-page'); }
     function renderQuiz() {
         const data = currentQuestions[currentStep];
