@@ -7,13 +7,15 @@
     <style>
         /* --- 視覺基調設定 --- */
         :root {
-            --primary-bg: #D0B990;    /* 背景：古銅金 */
-            --accent-1: #B09B75;      /* 輔色：深金 */
-            --accent-2: #2F4157;      /* 文字/線條：深藍 */
+            /* 【修改】背景主色改為明亮的馬卡龍黃 */
+            --primary-bg: #FFE066;    
+            --accent-1: #FFD54F;      /* 輔色：稍深的暖黃 (用於漸層底部) */
+            --accent-2: #000000;      /* 文字/線條：深藍 */
             --gold-1: #2F4157; 
-            --gold-2: #EBD8AD;        /* 淺金色 */
+            --gold-2: #EBD8AD;        /* 淺金色 (保留用於按鈕文字和福字) */
             --gold-3: #16202B; 
-            --text-color: #2F4157;
+            --text-color: #000000;
+            --btn-text: #FFFFFF;
             --font-serif: "jf-jinxuan-fresh-2.2", "Songti TC", "Noto Serif TC", "serif";
             --font-sans: "PingFang TC", "Microsoft JhengHei", sans-serif;
         }
@@ -24,7 +26,8 @@
             overflow: hidden; background-color: var(--primary-bg);
             background-image: 
                 radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.4) 0%, transparent 70%),
-                linear-gradient(180deg, #D0B990 0%, #B09B75 100%);
+                /* 【修改】背景漸層改為活潑的黃色系 */
+                linear-gradient(180deg, #FFE066 0%, #FFD54F 100%);
             background-attachment: fixed;
         }
 
@@ -52,7 +55,7 @@
         p.subtitle { font-size: 1.1rem; color: var(--accent-2); margin-top: 3rem; margin-bottom: 40px; letter-spacing: 2px; line-height: 1.8; font-weight: 400; }
 
         /* --- 按鈕樣式 --- */
-        .btn { background: var(--accent-2); border: 1px solid var(--accent-2); color: var(--gold-2); padding: 14px 60px; font-size: 1.1rem; cursor: pointer; border-radius: 50px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); text-decoration: none; letter-spacing: 3px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .btn { background: var(--accent-2); border: 1px solid var(--accent-2); color: var(--btn-text); padding: 14px 60px; font-size: 1.1rem; cursor: pointer; border-radius: 50px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); text-decoration: none; letter-spacing: 3px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .btn:hover { background: #16202B; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.4); transform: translateY(-2px); }
 
         /* --- 5. 第 1 頁：紅包 + 福字 + 青海波紋 --- */
@@ -135,11 +138,24 @@
         .exhibition-img { width: calc(100% - 32px); margin: 16px auto 12px auto; height: 160px; object-fit: cover; display: block; border: 0.5px solid var(--accent-2); opacity: 0.9; box-sizing: border-box; }
         .exhibition-item h3 { padding: 0 24px; margin: 0 0 8px 0 !important; color: var(--accent-2); font-size: 1.1rem; text-align: left !important; }
         .exhibition-item p { padding: 0 24px; margin: 0 0 15px 0 !important; font-size: 0.9rem; opacity: 0.8; line-height: 1.6; flex-grow: 1; color: var(--accent-2); text-align: left !important; }
-        .exhibition-item .btn { padding: 8px 20px !important; font-size: 0.85rem !important; width: fit-content !important; align-self: flex-start !important; margin-left: 24px !important; border-radius: 50px; background: var(--accent-2) !important; color: #EBD8AD !important; }
+        .exhibition-item .btn { padding: 8px 20px !important; font-size: 0.85rem !important; width: fit-content !important; align-self: flex-start !important; margin-left: 24px !important; border-radius: 50px; background: var(--accent-2) !important; color: #FFFFFF !important; }
         .page#page6 > .btn { margin-top: 15px !important; margin-bottom: 25px !important; padding: 10px 60px !important; position: relative; z-index: 20; line-height: 1.2; }
 
-        /* --- POP-UP 彈窗 --- */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(208, 185, 144, 0.95); justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(5px); }
+        /* --- POP-UP 彈窗 (修正背景色為馬卡龍黃) --- */
+        .overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            /* 👇 關鍵修改：這行改成新的黃色 */
+            background: rgba(255, 229, 101, 0.95); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 10000; 
+            backdrop-filter: blur(5px); 
+        }
         .popup { background: #fff; padding: 40px 30px; border: 2px solid var(--accent-2); text-align: center; width: 85%; max-width: 420px; color: var(--accent-2); display: flex; flex-direction: column; align-items: center; }
         #result-title { font-size: 2rem; margin: 0 0 15px 0; color: var(--accent-2); letter-spacing: 2px; }
         #result-subtitle { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.5; color: var(--accent-2); font-weight: 500; }
@@ -244,9 +260,9 @@
 
 <script>
     const quizData = [
-        { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["記者吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 },
+        { "q": "2026年歲次是什麼？", "a": ["龍年", "蛇年", "馬年", "羊年"], "correct": 2 },
         { "q": "以下對於端傳媒的敘述，哪一個不是正確的？", "a": ["邁向成立第11年", "端的讀者遍布全球100+個國家與地區", "2025年榮獲29項新聞獎", "以上皆是"], "correct": 3 },
-        { "q": "2026年歲次是什麼？", "a": ["龍年", "蛇年", "馬年", "羊年"], "correct": 2 }
+        { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["記者吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 }
     ];
 
 /* --- 1. 設定獎品與數量 (總數 1000 份) --- */
