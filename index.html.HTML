@@ -162,7 +162,7 @@
 
     <div id="page5" class="page">
         <h1 class="font-serif" style="font-size: 2.2rem; letter-spacing: 4px; color: var(--accent-2);">立即試手氣，選一個紅包</h1>
-        <p class="subtitle" style="margin-top: 1rem; margin-bottom: 20px;">端傳媒線上商店免單券等你抽，最高折抵HK$500</p>
+        <p class="subtitle" style="margin-top: 1rem; margin-bottom: 20px;">新春好禮限量1,000份等你抽，最高抽折抵HK$500端傳媒線上商店免單券</p>
         <div class="envelope-container">
             <div class="envelope-wrapper" onclick="drawPrize()"><div class="envelope"><span>馬上發財</span></div></div>
             <div class="envelope-wrapper" onclick="drawPrize()"><div class="envelope"><span>馬上有錢</span></div></div>
@@ -214,15 +214,77 @@
         { "q": "2026年歲次是什麼？", "a": ["龍年", "蛇年", "馬年", "羊年"], "correct": 2 }
     ];
 
-    const prizes = [
-        { title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "EOFWEJ68" },
-        { title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券（最高折 HK$300）", code: "EOFWEJ68" },
-        { title: "｜金春獎｜", subtitle: "線上商店 HK$200 折價券", code: "EOFWEJ68" },
-        { title: "｜好運獎｜", subtitle: "線上商店 9 折券", code: "EOFWEJ68" },
-        { title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "EOFWEJ68" },
-        { title: "｜開春獎｜", subtitle: "線上商店 HK$80折價券<br>（消費滿HK$400 才能使用）", code: "EOFWEJ68" },
-        { title: "｜未中獎｜", subtitle: "沒中獎別灰心！<br>端傳媒祝你新年快樂！", code: "" }
+/* --- 1. 設定獎品與數量 (總數 1000 份) --- */
+    const prizeConfig = [
+        { id: 1, count: 10,  title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "EOFWEJ68" },
+        { id: 2, count: 40,  title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券（最高折 HK$300）", code: "EOFWEJ68" },
+        { id: 3, count: 50,  title: "｜金春獎｜", subtitle: "線上商店 HK$200 折價券", code: "EOFWEJ68" },
+        { id: 4, count: 150, title: "｜好運獎｜", subtitle: "線上商店 9 折券", code: "EOFWEJ68" },
+        { id: 5, count: 700, title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "EOFWEJ68" },
+        { id: 6, count: 50,  title: "｜開春獎｜", subtitle: "線上商店 HK$80折價券<br>（消費滿HK$400 才能使用）", code: "EOFWEJ68" }
     ];
+
+    /* --- 2. 建立抽獎池 (自動計算：1000 份獎品 + 10000 份未中獎) --- */
+    let prizePool = [];
+    
+    // (A) 放入中獎籤
+    prizeConfig.forEach(p => { 
+        for(let i=0; i < p.count; i++) { 
+            prizePool.push(p); 
+        } 
+    });
+
+    // (B) 放入未中獎籤 (獎品總數的 10 倍)
+    const noWinPrize = { title: "｜未中獎｜", subtitle: "沒中獎別灰心！<br>端傳媒祝你新年快樂！", code: "" };
+    const totalPrizes = 1000;
+    const noWinCount = totalPrizes * 10; 
+
+    for(let i=0; i < noWinCount; i++) { 
+        prizePool.push(noWinPrize); 
+    }
+
+    /* --- 3. 抽獎執行函式 (包含卡控與彈窗) --- */
+    function drawPrize() {
+        // 檢查是否已抽過 (localStorage)
+        if (localStorage.getItem('drawn_prize_2026')) {
+            showAlreadyPlayedPopup(); // 之前可能缺少這個函式導致沒反應
+            return;
+        }
+
+        // 隨機抽選
+        const win = prizePool[Math.floor(Math.random() * prizePool.length)];
+
+        // 填入資料
+        document.getElementById('result-title').innerText = win.title;
+        document.getElementById('result-subtitle').innerHTML = win.subtitle;
+        
+        const codeElem = document.getElementById('result-code');
+        if(win.code) { 
+            codeElem.innerText = win.code; 
+            codeElem.style.display = 'block'; 
+        } else { 
+            codeElem.style.display = 'none'; 
+        }
+        
+        // 寫入已抽過紀錄
+        localStorage.setItem('drawn_prize_2026', 'true');
+        
+        // 顯示彈窗
+        document.getElementById('overlay').style.display = 'flex';
+    }
+
+    /* --- 4. 顯示「已抽過」提示彈窗 (這是修復關鍵) --- */
+    function showAlreadyPlayedPopup() {
+        document.getElementById('result-title').innerText = "提示";
+        document.getElementById('result-subtitle').innerText = "每人限參加一次，您已經領取過紅包囉！";
+        document.getElementById('result-code').style.display = 'none';
+        
+        // 確保按鈕文字正確
+        const btn = document.querySelector('#overlay .btn');
+        if(btn) btn.innerText = "前往專題";
+        
+        document.getElementById('overlay').style.display = 'flex';
+    }
 
     let currentQuestions = []; let currentStep = 0;
     function switchPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const target = document.getElementById(pageId); if(target) target.classList.add('active'); document.querySelector('.container').scrollTop = 0; }
@@ -242,15 +304,6 @@
         if (selectedIdx === correctIdx) element.style.background = "rgba(76, 175, 80, 0.2)";
         else element.style.background = "rgba(244, 67, 54, 0.2)";
         setTimeout(() => { if (currentStep < 2) { currentStep++; renderQuiz(); } else { switchPage('page5'); } }, 1000);
-    }
-    function drawPrize() {
-        const randomIdx = Math.floor(Math.random() * prizes.length);
-        const win = prizes[randomIdx];
-        document.getElementById('result-title').innerText = win.title;
-        document.getElementById('result-subtitle').innerHTML = win.subtitle;
-        const codeElem = document.getElementById('result-code');
-        if(win.code) { codeElem.innerText = win.code; codeElem.style.display = 'block'; } else { codeElem.style.display = 'none'; }
-        document.getElementById('overlay').style.display = 'flex';
     }
 </script>
 </body>
