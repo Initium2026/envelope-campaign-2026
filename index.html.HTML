@@ -7,11 +7,11 @@
     <style>
         /* --- 視覺基調設定 --- */
         :root {
-            --primary-bg: #FFE7DB;   /* 修改這裡：網頁主背景色 */
-            --accent-1: #FFCAAF;      /* 修改這裡：輔助暖色（用於漸層底部） */
-            --accent-2: #000000;      /* 文字/線條：純黑 */
+            --primary-bg: #FFE7DB;   
+            --accent-1: #FFCAAF;     
+            --accent-2: #000000;     
             --gold-1: #2F4157; 
-            --gold-2: #EBD8AD;        /* 淺金色 (用於按鈕文字和福字) */
+            --gold-2: #EBD8AD;       
             --gold-3: #16202B; 
             --text-color: #000000;
             --btn-text: #FFFFFF;
@@ -42,7 +42,7 @@
         .container { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none; box-sizing: border-box; }
         .container::-webkit-scrollbar { display: none; }
 
-        /* 1. 定義馬兒的動態效果 */
+        /* 動畫設定 */
         @keyframes horseMotion {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             25% { transform: translateY(-10px) rotate(-3deg); }
@@ -50,31 +50,14 @@
             75% { transform: translateY(-5px) rotate(3deg); }
         }
 
-        /* 2. 左下角馬兒 */
         .bottom-left-image {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 250px;
-            height: auto;
-            z-index: 8;
-            pointer-events: none;
-            animation: horseMotion 3s ease-in-out infinite;
-            transform-origin: bottom center;
+            position: fixed; bottom: 20px; left: 20px; width: 250px; height: auto; z-index: 8; pointer-events: none;
+            animation: horseMotion 3s ease-in-out infinite; transform-origin: bottom center;
         }
 
-        /* 3. 右下角馬兒 */
         .bottom-right-image {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 250px;
-            height: auto;
-            z-index: 8;
-            pointer-events: none;
-            transform: scaleX(-1);
-            animation: horseMotion 3s ease-in-out infinite;
-            transform-origin: bottom center;
+            position: fixed; bottom: 20px; right: 20px; width: 250px; height: auto; z-index: 8; pointer-events: none;
+            transform: scaleX(-1); animation: horseMotion 3s ease-in-out infinite; transform-origin: bottom center;
         }
 
         /* --- 頁面共同樣式 --- */
@@ -83,27 +66,16 @@
         .font-serif { font-family: var(--font-serif); }
         
         .torn-label {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            letter-spacing: 0.1em;
-            margin-bottom: 2rem;
-            padding: 4px 12px;
-            border-bottom: 2px solid var(--accent-2);
-            opacity: 0.9;
+            font-family: var(--font-serif); font-size: 1.5rem; letter-spacing: 0.1em; margin-bottom: 2rem;
+            padding: 4px 12px; border-bottom: 2px solid var(--accent-2); opacity: 0.9;
         }
 
         h1.main-title { font-size: 2.5rem; font-weight: 700; line-height: 1.5; letter-spacing: 0.25em; color: var(--accent-2); margin: 0; }
         @media (min-width: 768px) { h1.main-title { font-size: 4.5rem; } }
 
         p.subtitle {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            color: var(--accent-2);
-            margin-top: 3rem;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-            line-height: 1.8;
-            font-weight: 400;
+            font-family: var(--font-serif); font-size: 1.1rem; color: var(--accent-2); margin-top: 3rem;
+            margin-bottom: 40px; letter-spacing: 2px; line-height: 1.8; font-weight: 400;
         }
 
         /* --- 按鈕樣式 --- */
@@ -116,25 +88,19 @@
             background: linear-gradient(145deg, #A52A2A, #D43F3F); 
             border: 1px solid rgba(255,255,255,0.3); 
             box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-            border-radius: 8px; 
-            z-index: 2; overflow: hidden; pointer-events: none; 
+            border-radius: 8px; z-index: 2; overflow: hidden; pointer-events: none; 
         }
         .promo-envelope::before { 
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 40%; 
-            background: #B22222; clip-path: polygon(0 0, 100% 0, 100% 35%, 50% 100%, 0 35%); 
-            z-index: 2; 
+            background: #B22222; clip-path: polygon(0 0, 100% 0, 100% 35%, 50% 100%, 0 35%); z-index: 2; 
         }
         .promo-envelope::after {
-            content: "福"; position: absolute;
-            left: 50%; transform: translateX(-50%); top: 28%; 
-            color: var(--gold-2); font-family: var(--font-serif);
-            font-size: 1.3rem; font-weight: bold;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-            z-index: 3;
+            content: "福"; position: absolute; left: 50%; transform: translateX(-50%); top: 28%; 
+            color: var(--gold-2); font-family: var(--font-serif); font-size: 1.3rem; font-weight: bold;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.2); z-index: 3;
         }
         .seigaiha-decor {
-            position: absolute; bottom: 0; width: 60px; height: 60px;
-            opacity: 0.5; z-index: 1; pointer-events: none;
+            position: absolute; bottom: 0; width: 60px; height: 60px; opacity: 0.5; z-index: 1; pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23EBD8AD' stroke-width='1'%3E%3Cpath d='M0 20 A 10 10 0 0 1 20 20' /%3E%3Cpath d='M2 20 A 8 8 0 0 1 18 20' /%3E%3Cpath d='M4 20 A 6 6 0 0 1 16 20' /%3E%3Cpath d='M-10 10 A 10 10 0 0 1 10 10' /%3E%3Cpath d='M-8 10 A 8 8 0 0 1 8 10' /%3E%3Cpath d='M-6 10 A 6 6 0 0 1 6 10' /%3E%3Cpath d='M10 10 A 10 10 0 0 1 30 10' /%3E%3Cpath d='M12 10 A 8 8 0 0 1 28 10' /%3E%3Cpath d='M14 10 A 6 6 0 0 1 26 10' /%3E%3C/g%3E%3C/svg%3E");
         }
         .pos-bottom-right { right: 0; -webkit-mask-image: linear-gradient(135deg, transparent 0%, black 60%); border-bottom-right-radius: 8px; }
@@ -174,22 +140,8 @@
         #result-subtitle { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.5; color: var(--accent-2); font-weight: 500; }
         #result-code { font-family: monospace; font-size: 1rem; color: #A52A2A; border: 1px dashed #A52A2A; padding: 5px 15px; margin-bottom: 25px; letter-spacing: 1px; background: rgba(165, 42, 42, 0.05); }
 
-        /* 按鈕容器 */
-        .action-area {
-         display: flex;
-         gap: 20px;
-         justify-content: center;
-         align-items: center;
-         margin-top: 0px;
-         margin-bottom: 30px;
-         width: 100%;
-         flex-wrap: wrap;
-        }
-
-        .action-area .btn {
-         min-width: 180px;
-         padding: 10px 30px !important;
-        }
+        .action-area { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 0px; margin-bottom: 30px; width: 100%; flex-wrap: wrap; }
+        .action-area .btn { min-width: 180px; padding: 10px 30px !important; }
 
         /* --- 手機版適配 --- */
         @media (max-width: 900px) {
@@ -209,25 +161,9 @@
             .exhibition-wrapper { flex-direction: row !important; flex-wrap: nowrap !important; overflow-x: auto !important; justify-content: flex-start !important; gap: 20px !important; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
             .exhibition-item { flex: 0 0 85% !important; max-width: 320px !important; scroll-snap-align: center; }
             .popup { width: 85% !important; max-width: 360px !important; border-radius: 12px; }
-
-            .bottom-left-image {
-                width: 150px;
-                bottom: 10px;
-                left: 10px;
-                animation: horseMotion 2.5s ease-in-out infinite;
-            }
-
-            .bottom-right-image {
-                width: 150px;
-                bottom: 10px;
-                right: 10px;
-                transform: scaleX(-1);
-                animation: horseMotion 2.5s ease-in-out infinite;
-            }
-
-            #page6 h2 {
-                font-size: 1.8rem !important; 
-            }
+            .bottom-left-image { width: 150px; bottom: 10px; left: 10px; animation: horseMotion 2.5s ease-in-out infinite; }
+            .bottom-right-image { width: 150px; bottom: 10px; right: 10px; transform: scaleX(-1); animation: horseMotion 2.5s ease-in-out infinite; }
+            #page6 h2 { font-size: 1.8rem !important; }
         }
     </style>
 </head>
@@ -296,7 +232,7 @@
                 </div>
             </div>
             <div class="action-area">
-                <a href="https://theinitium.com/tag/2026-lunar-new-year/" target="_blank" class="btn">看更多限時免費報導</a>
+                <a href="https://theinitium.com/tag/2026-lunar-new-year/" target="_blank" class="btn">看更多限時免費文章</a>
                 <a href="https://theinitium.com/20260216-lucky-envelope/" target="_blank" class="btn">查看活動辦法</a>
             </div>
         </div>
@@ -318,84 +254,87 @@
             { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["記者吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 }
         ];
 
+        // --- 正式版獎項權重設定 ---
         const prizeConfig = [
-            { id: 1, title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "6HR6517Q2807" },
-            { id: 2, title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券", code: "MV4RXJPA6B1H" },
-            { id: 3, title: "｜開春獎｜", subtitle: "線上商店 HK$80 折價券<br>（消費滿HK$400 才能使用）", code: "M19F3350VAYE" },
-            { id: 4, title: "｜好運獎｜", subtitle: "線上商店 9 折券", code: "X9XFA4PRF03E" },
-            { id: 5, title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "21DM9Q0G83SE" }
+            { id: 1, type: 'win', weight: 10, title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "6HR6517Q2807" },
+            { id: 2, type: 'win', weight: 40, title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券", code: "MV4RXJPA6B1H" },
+            { id: 3, type: 'win', weight: 100, title: "｜開春獎｜", subtitle: "線上商店 HK$80 折價券<br>（消費滿HK$400 才能使用）", code: "M19F3350VAYE" },
+            { id: 4, type: 'win', weight: 150, title: "｜好運獎｜", subtitle: "線上商店 9 折券", code: "X9XFA4PRF03E" },
+            { id: 5, type: 'win', weight: 700, title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "21DM9Q0G83SE" },
+            // 未中獎權重恢復為 8000
+            { id: 0, type: 'lose', weight: 8000, title: "｜未中獎｜", subtitle: "可惜沒有中獎～<br>端傳媒祝你新年快樂！", code: "" }
         ];
 
-        let prizePool = [...prizeConfig];
-
-        function getStoredPool() {
-            // 修改了 key name (加上 _final_v2) 確保獎池重新初始化
-            let pool = localStorage.getItem('prize_pool_status_2026_final_v2');
-            if (!pool) {
-                // 這裡設定為 [1, 2]，代表金馬獎(1) 與 金喜獎(2) 各 1 個
-                const initialPool = [1, 2];
-                localStorage.setItem('prize_pool_status_2026_final_v2', JSON.stringify(initialPool));
-                return initialPool;
-            }
-            return JSON.parse(pool);
-        }
+        // --- 正式版 Key ---
+        const STORAGE_KEY = 'drawn_prize_2026_final_launch';
 
         function drawPrize() {
-            // 修改 key name 為 'drawn_prize_2026_final_v2'，強制瀏覽器視為新活動
-            if (localStorage.getItem('drawn_prize_2026_final_v2')) {
+            // 1. 檢查是否已經玩過 (恢復檢查)
+            if (localStorage.getItem(STORAGE_KEY)) {
                 showAlreadyPlayedPopup();
                 return;
             }
-            let currentPool = getStoredPool();
-            if (currentPool.length === 0) {
-                showEmptyPoolPopup();
-                return;
-            }
-            const luckyIdx = Math.floor(Math.random() * currentPool.length);
-            const winId = currentPool[luckyIdx];
-            const win = prizeConfig.find(p => p.id === winId);
 
+            // 2. 計算總權重
+            let totalWeight = 0;
+            prizeConfig.forEach(p => totalWeight += p.weight);
+
+            // 3. 隨機骰出一個數字
+            let random = Math.random() * totalWeight;
+            
+            // 4. 找出對應的獎項
+            let result = null;
+            for (let i = 0; i < prizeConfig.length; i++) {
+                if (random < prizeConfig[i].weight) {
+                    result = prizeConfig[i];
+                    break;
+                }
+                random -= prizeConfig[i].weight;
+            }
+
+            // 5. 記錄已玩過 (恢復寫入)
+            localStorage.setItem(STORAGE_KEY, 'true');
+
+            // 6. 顯示結果
+            if (result.type === 'win') {
+                showWinPopup(result);
+            } else {
+                showNoWinPopup(result);
+            }
+        }
+
+        function showWinPopup(win) {
             document.getElementById('result-title').innerText = win.title;
             document.getElementById('result-subtitle').innerHTML = win.subtitle;
             const codeElem = document.getElementById('result-code');
             codeElem.innerText = win.code;
             codeElem.style.display = 'block';
-
-            currentPool.splice(luckyIdx, 1);
-            localStorage.setItem('prize_pool_status_2026_final_v2', JSON.stringify(currentPool));
-            // 寫入新的 key
-            localStorage.setItem('drawn_prize_2026_final_v2', 'true');
-            
-            const btn = document.querySelector('#overlay .btn');
-            if(btn) {
-                btn.innerText = "閱讀限時免費文章";
-                btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
-            }
+            updateOverlayBtn();
             document.getElementById('overlay').style.display = 'flex';
         }
 
-        function showEmptyPoolPopup() {
-            document.getElementById('result-title').innerText = "💡活動提醒💡";
-            document.getElementById('result-subtitle').innerText = "謝謝你的支持！紅包已經都抽完囉！";
+        function showNoWinPopup(lose) {
+            document.getElementById('result-title').innerText = lose.title; 
+            document.getElementById('result-subtitle').innerHTML = lose.subtitle;
             document.getElementById('result-code').style.display = 'none';
-            const btn = document.querySelector('#overlay .btn');
-            if(btn) {
-                btn.innerText = "閱讀限時免費文章";
-                btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
-            }
+            updateOverlayBtn();
             document.getElementById('overlay').style.display = 'flex';
         }
 
         function showAlreadyPlayedPopup() {
             document.getElementById('result-title').innerText = "💡活動提醒💡";
-            document.getElementById('result-subtitle').innerText = "每人僅限抽獎一次，您已經抽過紅包囉！";
+            document.getElementById('result-subtitle').innerText = "每人僅限抽獎一次，您已經參加過活動囉！";
             document.getElementById('result-code').style.display = 'none';
+            updateOverlayBtn();
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function updateOverlayBtn() {
             const btn = document.querySelector('#overlay .btn');
             if(btn) {
                 btn.innerText = "閱讀限時免費文章";
                 btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
             }
-            document.getElementById('overlay').style.display = 'flex';
         }
 
         let currentQuestions = []; let currentStep = 0;
