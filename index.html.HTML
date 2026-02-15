@@ -295,9 +295,12 @@
             /* 下方標題位置 */
             #page6 .shop-title-bottom { margin-top: 0px !important; }
             /* 第 6 頁說明文字 */
-            #page6 p { font-size: 0.7rem !important; }
-            width: 85% !important;/* 限制寬度，讓文字自動斷行 */
-            margin: 0 auto 30px auto !important; /* 讓文字區塊維持水平置中 */
+            #page6 p { 
+                font-size: 0.7rem !important; 
+                width: 85% !important;/* 限制寬度，讓文字自動斷行 */
+                margin: 0 auto 30px auto !important; /* 讓文字區塊維持水平置中 */
+            }
+            
             /* 櫥窗內標題 */
             .exhibition-item h3 { font-size: 0.1rem !important; }
 
@@ -438,7 +441,7 @@
         // 權重調整版 (10:40:100:150:700) + 測試模式
         const prizeConfig = [
             { 
-                id: 1, type: 'win', weight: 1, 
+                id: 1, type: 'win', weight: 10, 
                 title: "｜金馬獎｜", 
                 subtitle: "恭喜你獲得最大獎：線上商店100%折抵券<br>最高折HK$500", 
                 code: "6HR6517Q2807", 
@@ -446,20 +449,20 @@
                 code2: "BF7MQ8AK5Z0N", // 第二組代碼
                 text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看"
             },
-            { id: 2, type: 'win', weight: 1, title: "｜金喜獎｜", subtitle: "恭喜你獲得：線上商店全單 8 折券", code: "MV4RXJPA6B1H", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
-            { id: 3, type: 'win', weight: 1, title: "｜開春獎｜", subtitle: "恭喜你獲得：線上商店 HK$80 折價券", code: "M19F3350VAYE", text1: "訂單滿 HK$400 即可折抵", text2: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
-            { id: 4, type: 'win', weight: 1, title: "｜好運獎｜", subtitle: "恭喜你獲得：線上商店 9 折券", code: "X9XFA4PRF03E", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
-            { id: 5, type: 'win', weight: 1, title: "｜隨喜獎｜", subtitle: "恭喜你獲得：線上商店 95 折券", code: "21DM9Q0G83SE", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
+            { id: 2, type: 'win', weight: 40, title: "｜金喜獎｜", subtitle: "恭喜你獲得：線上商店全單 8 折券", code: "MV4RXJPA6B1H", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
+            { id: 3, type: 'win', weight: 100, title: "｜開春獎｜", subtitle: "恭喜你獲得：線上商店 HK$80 折價券", code: "M19F3350VAYE", text1: "訂單滿 HK$400 即可折抵", text2: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
+            { id: 4, type: 'win', weight: 150, title: "｜好運獎｜", subtitle: "恭喜你獲得：線上商店 9 折券", code: "X9XFA4PRF03E", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
+            { id: 5, type: 'win', weight: 700, title: "｜隨喜獎｜", subtitle: "恭喜你獲得：線上商店 95 折券", code: "21DM9Q0G83SE", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
         ];
 
-        const STORAGE_KEY = 'drawn_prize_2026_test_weights';
+        const STORAGE_KEY = 'drawn_prize_2026_real_weights';
 
         function drawPrize() {
-            // 測試模式：暫不檢查 localStorage
-            // if (localStorage.getItem(STORAGE_KEY)) {
-            //     showAlreadyPlayedPopup();
-            //     return;
-            // }
+            // [修改] 啟用一人限抽一次的檢查
+            if (localStorage.getItem(STORAGE_KEY)) {
+                showAlreadyPlayedPopup();
+                return;
+            }
 
             let totalWeight = 0;
             prizeConfig.forEach(p => totalWeight += p.weight);
@@ -474,8 +477,8 @@
                 random -= prizeConfig[i].weight;
             }
 
-            // 測試模式：暫不寫入 localStorage
-            // localStorage.setItem(STORAGE_KEY, 'true');
+            // [修改] 抽獎成功後記錄狀態
+            localStorage.setItem(STORAGE_KEY, 'true');
 
             if (result && result.type === 'win') {
                 showWinPopup(result);
@@ -510,6 +513,19 @@
             copyBtn.style.display = 'inline-block'; 
             copyBtn.innerText = '複製代碼'; 
 
+            updateOverlayBtn();
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        // [新增] 顯示「已抽過」的彈窗邏輯
+        function showAlreadyPlayedPopup() {
+            document.getElementById('result-title').innerText = "💡活動提醒💡";
+            document.getElementById('result-subtitle').innerText = "每人僅限抽獎一次，\n你已經參加過活動囉！";
+            document.getElementById('result-code').style.display = 'none';
+            document.getElementById('second-prize-group').style.display = 'none';
+            document.getElementById('result-extra-info').style.display = 'none';
+            document.getElementById('btn-copy').style.display = 'none';
+            
             updateOverlayBtn();
             document.getElementById('overlay').style.display = 'flex';
         }
@@ -572,5 +588,3 @@
     </script>
 </body>
 </html>
-
-
