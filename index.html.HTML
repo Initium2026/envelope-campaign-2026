@@ -36,6 +36,9 @@
             background-attachment: fixed;
         }
 
+            /* [新增] 用於控制只在手機版換行的 class */
+            .mobile-br { display: none; }
+
         .top-logo { position: fixed; top: 24px; left: 24px; z-index: 100; width: 48px; }
         .top-logo img { width: 100%; display: block; filter: brightness(0.2); }
 
@@ -178,7 +181,7 @@
         
         /* --- POP-UP 彈窗 --- */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 231, 219, 0.95); justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(5px); }
-        .popup { background: #fff; padding: 40px 30px; border: 2px solid var(--accent-2); text-align: center; width: 85%; max-width: 420px; color: var(--accent-2); display: flex; flex-direction: column; align-items: center; }
+        .popup { background: #fff; padding: 40px 30px; border: 2px solid var(--accent-2); text-align: center; width: 75%; max-width: 400px; color: var(--accent-2); display: flex; flex-direction: column; align-items: center; }
         #result-title { font-size: 2rem; margin: 0 0 15px 0; color: var(--accent-2); letter-spacing: 2px; }
         #result-subtitle { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.5; color: var(--accent-2); font-weight: 500; }
         
@@ -214,6 +217,9 @@
         /* --- 手機版適配 (在此處修改文字大小) --- */
         @media (max-width: 900px) {
             .page { padding: 40px 15px; }
+
+        /* [新增] 讓 .mobile-br 在手機版顯示為換行 */
+            .mobile-br { display: inline !important; }
             
             .top-right-envelope { 
                 width: 90px; 
@@ -255,7 +261,7 @@
 
             /* --- [修改] 第 5 頁標題與副標題文字 --- */
             #page5 h1 { 
-                margin-top: -80px !important; 
+                margin-top: -50px !important; 
                 font-size: 1.6rem !important; /* 原 1.6rem */
                 width: 100%; 
             }
@@ -356,7 +362,7 @@
 
         <div id="page5" class="page">
             <h1 class="font-serif" style="font-size: 2.2rem; letter-spacing: 4px; color: var(--btn-bg);">立即試手氣，選一個紅包</h1>
-            <p class="subtitle" style="margin-top: 1rem; margin-bottom: 20px; font-size: 1.1rem; color: var(--accent-2);">限量 1,000 份新春好禮等你抽，最高抽「線上商店全單100%折抵券」</p>
+            <p class="subtitle" style="margin-top: 1rem; margin-bottom: 20px; font-size: 1.1rem; color: var(--accent-2);">限量 1,000 份新春好禮等你抽，<br class="mobile-br">最高抽「線上商店全單100%折抵券」</p>
             <div class="envelope-container">
                 <div class="envelope-wrapper" onclick="drawPrize()"><div class="envelope"><span>馬上發財</span></div></div>
                 <div class="envelope-wrapper" onclick="drawPrize()"><div class="envelope"><span>馬上有錢</span></div></div>
