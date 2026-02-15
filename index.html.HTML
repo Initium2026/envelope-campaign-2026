@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>端傳媒新春限定｜春節抽紅包活動</title>
+    <title>端傳媒馬年新春限定｜好運加碼，端看這一抽！</title>
     <style>
         /* --- 視覺基調設定 --- */
         :root {
@@ -211,23 +211,57 @@
         .action-area { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 0px; margin-bottom: 30px; width: 100%; flex-wrap: wrap; }
         .action-area .btn { min-width: 180px; padding: 10px 30px !important; }
 
-        /* --- 手機版適配 --- */
+        /* --- 手機版適配 (在此處修改文字大小) --- */
         @media (max-width: 900px) {
             .page { padding: 40px 15px; }
-            .top-right-envelope { width: 110px; right: -10px; top: auto !important; bottom: 20%; }
+            
+            .top-right-envelope { 
+                width: 90px; 
+                right: 20px; 
+                top: auto !important; 
+                bottom: 70%; 
+            }
+
             .env-left { left: -10px; top: 18%; }
-            .torn-label-img { width: 80px; margin-bottom: 1rem; }
-            .main-title-img { width: 180px; margin-top: 10px; }
-            .subtitle-img { width: 280px; margin-top: 1rem; margin-bottom: 20px; }
-            .footer-text-img { width: 50px; margin-top: 15px; }
+            .torn-label-img { width: 150px; margin-bottom: 1rem; }
+            .main-title-img { width: 300px; margin-top: 10px; }
+            .subtitle-img { width: 350px; margin-top: 1rem; margin-bottom: 20px; }
+            .footer-text-img { width: 70px; margin-top: 15px; }
             
             .torn-label-img, .main-title-img, .subtitle-img, .footer-text-img, .btn { position: relative; z-index: 10; }
             
-            .btn { font-size: 1rem !important; padding: 10px 40px !important; }
-            .envelope-container { flex-wrap: wrap; height: auto; margin-top: 10px; gap: 15px !important; padding-bottom: 40px; }
-            .envelope-wrapper { width: 45%; height: 180px !important; }
-            .envelope span { margin-top: 55px; font-size: 1.2rem; }
-            #page5 h1 { margin-top: 50px !important; font-size: 1.6rem !important; width: 100%; }
+            .btn { font-size: 0.8rem !important; padding: 5px 40px !important; }
+            
+            /* 手機版紅包牆 */
+            .envelope-container { 
+                flex-wrap: wrap; 
+                height: auto; 
+                margin-top: 30px; 
+                gap: 50px 10px !important; /* 縮小間距 */
+                padding-bottom: 40px; 
+            }
+            .envelope-wrapper {
+                width: 30% !important; 
+                height: 150px !important;
+            }
+            .envelope {
+                width: 70% !important; 
+                height: 120% !important; 
+            }
+            .envelope span { 
+                margin-top: 45px !important; /* 調整文字位置 */
+                font-size: 1rem !important; /* 縮小文字 */
+            }
+
+            /* --- [修改] 第 5 頁標題與副標題文字 --- */
+            #page5 h1 { 
+                margin-top: -80px !important; 
+                font-size: 1.6rem !important; /* 原 1.6rem */
+                width: 100%; 
+            }
+            #page5 .subtitle {
+                font-size: 0.95rem !important; /* 原 1.1rem */
+            }
             
             .exhibition-wrapper { 
                 flex-direction: row !important; 
@@ -240,21 +274,55 @@
                 margin-top: 40px !important; 
             }
             
-            .exhibition-item { flex: 0 0 85% !important; max-width: 320px !important; scroll-snap-align: center; }
+            .exhibition-item { flex: 0 0 30% !important; max-width: 320px !important; scroll-snap-align: center; }
             .popup { width: 85% !important; max-width: 360px !important; border-radius: 12px; }
             .bottom-left-image { width: 150px; bottom: 10px; left: 10px; animation: horseMotion 2.5s ease-in-out infinite; }
             .bottom-right-image { width: 150px; bottom: 10px; right: 10px; transform: scaleX(-1); animation: horseMotion 2.5s ease-in-out infinite; }
             
-            /* 第 6 頁上方標題 (手機版) */
-            #page6 h2 { 
-                font-size: 1.8rem !important; 
-                margin-top: -30px !important; 
+            /* --- [修改] 第 6 頁文字 --- */
+            /* 標題大小 */
+            #page6 h2, #page6 .shop-title-bottom { 
+                font-size: 1.6rem !important; /* 原 1.8rem */
+            }
+            /* 上方標題位置 */
+            #page6 h2 { margin-top: -10px !important; }
+            /* 下方標題位置 */
+            #page6 .shop-title-bottom { margin-top: 10px !important; }
+            /* 第 6 頁說明文字 */
+            #page6 p { font-size: 0.8rem !important; }
+            width: 85% !important;/* 限制寬度，讓文字自動斷行 */
+            margin: 0 auto 30px auto !important; /* 讓文字區塊維持水平置中 */
+            /* 櫥窗內標題 */
+            .exhibition-item h3 { font-size: 0.7rem !important; }
+
+            /* --- 手機版問答頁面調整 --- */
+            #quiz-page {
+                justify-content: flex-start !important; 
+                padding-top: 130px !important; 
             }
 
-            /* 第 6 頁下方標題 (手機版) */
-            #page6 .shop-title-bottom {
-                font-size: 1.8rem !important;
-                margin-top: 40px !important; 
+            .question-box {
+                margin-top: 10px !important; 
+            }
+
+            /* --- [修改] 問答題目與選項文字 --- */
+            #quiz-question-text {
+                font-size: 1.1rem !important;
+                line-height: 1 !important;
+            }
+
+            .option {
+                width: 85% !important; 
+                font-size: 0.8rem !important; 
+                padding: 12px 15px !important;
+                margin: 8px auto !important;
+            }
+
+            /* ▼ [新增] 這裡控制第 6 頁按鈕的寬度 ▼ */
+            #page6 .btn {
+            width: 40% !important;       /* 修改這個數字來調整寬度 (例如 60%, 80%, 或 250px) */
+            max-width: 300px !important; /* 限制最大寬度，避免在平板上太寬 */
+            padding: 12px 0 !important;  /* 調整按鈕高度/內距 */
             }
         }
     </style>
