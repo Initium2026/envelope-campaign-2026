@@ -65,50 +65,70 @@
         .page.active { display: flex !important; }
         .font-serif { font-family: var(--font-serif); }
         
-        .torn-label {
-            font-family: var(--font-serif); font-size: 1.5rem; letter-spacing: 0.1em; margin-bottom: 2rem;
-            padding: 4px 12px; border-bottom: 2px solid var(--accent-2); opacity: 0.9;
+        /* --- 小標題圖片樣式 --- */
+        .torn-label-img {
+            width: 250px; 
+            height: auto;
+            display: block;
+            margin: 0 auto 3rem auto; 
+            opacity: 0.9;
         }
 
-        h1.main-title { font-size: 2.5rem; font-weight: 700; line-height: 1.5; letter-spacing: 0.25em; color: var(--accent-2); margin: 0; }
-        @media (min-width: 768px) { h1.main-title { font-size: 4.5rem; } }
+        /* --- 主標題圖片樣式 --- */
+        .main-title-img {
+            width: 500px; 
+            max-width: 90%; 
+            height: auto;
+            display: block;
+            margin: 0 auto 10px auto; 
+        }
 
-        p.subtitle {
-            font-family: var(--font-serif); font-size: 1.1rem; color: var(--accent-2); margin-top: 3rem;
-            margin-bottom: 40px; letter-spacing: 2px; line-height: 1.8; font-weight: 400;
+        /* --- 副標題圖片樣式 --- */
+        .subtitle-img {
+            width: 580px; 
+            max-width: 95%;
+            height: auto;
+            display: block;
+            margin-top: 3rem; 
+            margin-bottom: 40px; 
+        }
+
+        /* --- 按鈕下方文字圖片樣式 (電腦版) --- */
+        .footer-text-img {
+            width: 100px; 
+            height: auto;
+            display: block;
+            margin: 20px auto 0 auto; 
+            opacity: 0.9;
         }
 
         /* --- 按鈕樣式 --- */
-        .btn { background: var(--btn-bg); border: 0px solid var(--accent-2); color: var(--btn-text); padding: 14px 60px; font-size: 1.1rem; cursor: pointer; border-radius: 50px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); text-decoration: none; letter-spacing: 3px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .btn:hover { background: #16202B; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.4); transform: translateY(-2px); }
+        .btn { background: var(--btn-bg); border: 0px solid var(--accent-2); color: var(--btn-text); padding: 10px 60px; font-size: 1.1rem; cursor: pointer; border-radius: 50px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); text-decoration: none; letter-spacing: 3px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .btn:hover { background: #000000; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.4); transform: translateY(-2px); }
 
-        /* --- 第一頁：紅包裝飾 --- */
-        .promo-envelope { 
-            position: absolute; width: 110px; height: 220px; 
-            background: linear-gradient(145deg, #A52A2A, #D43F3F); 
-            border: 1px solid rgba(255,255,255,0.3); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-            border-radius: 8px; z-index: 2; overflow: hidden; pointer-events: none; 
+        /* --- 複製按鈕專用樣式 --- */
+        .btn-copy {
+            background: var(--accent-2); 
+            margin-bottom: 15px; 
+            display: none; 
         }
-        .promo-envelope::before { 
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 40%; 
-            background: #B22222; clip-path: polygon(0 0, 100% 0, 100% 35%, 50% 100%, 0 35%); z-index: 2; 
+        .btn-copy:hover {
+            background: var(--btn-bg);
         }
-        .promo-envelope::after {
-            content: "福"; position: absolute; left: 50%; transform: translateX(-50%); top: 28%; 
-            color: var(--gold-2); font-family: var(--font-serif); font-size: 1.3rem; font-weight: bold;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.2); z-index: 3;
-        }
-        .seigaiha-decor {
-            position: absolute; bottom: 0; width: 60px; height: 60px; opacity: 0.5; z-index: 1; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23EBD8AD' stroke-width='1'%3E%3Cpath d='M0 20 A 10 10 0 0 1 20 20' /%3E%3Cpath d='M2 20 A 8 8 0 0 1 18 20' /%3E%3Cpath d='M4 20 A 6 6 0 0 1 16 20' /%3E%3Cpath d='M-10 10 A 10 10 0 0 1 10 10' /%3E%3Cpath d='M-8 10 A 8 8 0 0 1 8 10' /%3E%3Cpath d='M-6 10 A 6 6 0 0 1 6 10' /%3E%3Cpath d='M10 10 A 10 10 0 0 1 30 10' /%3E%3Cpath d='M12 10 A 8 8 0 0 1 28 10' /%3E%3Cpath d='M14 10 A 6 6 0 0 1 26 10' /%3E%3C/g%3E%3C/svg%3E");
-        }
-        .pos-bottom-right { right: 0; -webkit-mask-image: linear-gradient(135deg, transparent 0%, black 60%); border-bottom-right-radius: 8px; }
-        .pos-bottom-left { left: 0; -webkit-mask-image: linear-gradient(-135deg, transparent 0%, black 60%); border-bottom-left-radius: 8px; }
 
-        .env-left { left: 8%; top: 35%; animation: envelopeFloatLeft 4.5s ease-in-out infinite; }
-        .env-right { right: 8%; top: 10%; animation: envelopeFloatRight 4.5s ease-in-out infinite; animation-delay: -2.25s; }
-        @keyframes envelopeFloatLeft { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-25px) rotate(-13deg); } }
+        /* --- 第一頁：紅包裝飾 (圖片) --- */
+        .top-right-envelope {
+            position: absolute;
+            width: 160px; 
+            height: auto;
+            right: 8%;
+            top: 10%;
+            z-index: 2;
+            pointer-events: none;
+            animation: envelopeFloatRight 4.5s ease-in-out infinite;
+            animation-delay: -2.25s;
+        }
+
         @keyframes envelopeFloatRight { 0%, 100% { transform: translateY(0) rotate(10deg); } 50% { transform: translateY(-25px) rotate(13deg); } }
 
         /* --- 問答頁 --- */
@@ -126,19 +146,67 @@
         .envelope-wrapper:hover { z-index: 100 !important; transform: translateY(-30px) scale(1.05) !important; }
 
         /* --- 第 6 頁：延伸閱讀 --- */
-        .exhibition-wrapper { display: flex; flex-direction: row; gap: 40px; padding: 0 40px; margin-bottom: 20px; overflow-x: auto; justify-content: center; width: 100%; }
+        #page6 h2 { 
+            color: var(--accent-2); 
+            letter-spacing: 2px; 
+            margin-bottom: 0px; 
+            font-size: 2.2rem;
+            margin-top: -20px; 
+        }
+
+        #page6 .shop-title-bottom {
+            margin-top: 10px !important; 
+            margin-bottom: 20px !important;
+        }
+
+        .exhibition-wrapper { 
+            display: flex; 
+            flex-direction: row; 
+            gap: 40px; 
+            padding: 0 40px; 
+            margin-bottom: 20px; 
+            overflow-x: auto; 
+            justify-content: center; 
+            width: 100%; 
+            margin-top: 20px; 
+        }
+
         .exhibition-item { flex: 0 0 300px; background: rgba(0, 0, 0, 0.05); padding: 0 0 25px 0; border-left: 2px solid var(--accent-2); overflow: hidden; display: flex; flex-direction: column; box-sizing: border-box; z-index: 10; position: relative; text-align: left !important; }
         .exhibition-img { width: calc(100% - 32px); margin: 16px auto 12px auto; height: 160px; object-fit: cover; display: block; border: 0.5px solid var(--accent-2); opacity: 0.9; box-sizing: border-box; }
         .exhibition-item h3 { padding: 0 24px; margin: 0 0 8px 0 !important; color: var(--accent-2); font-size: 1.1rem; text-align: left !important; }
         .exhibition-item p { padding: 0 24px; margin: 0 0 15px 0 !important; font-size: 0.9rem; opacity: 0.8; line-height: 1.6; flex-grow: 1; color: var(--accent-2); text-align: left !important; }
-        .exhibition-item .btn { padding: 8px 20px !important; font-size: 0.85rem !important; width: fit-content !important; align-self: flex-start !important; margin-left: 24px !important; border-radius: 50px; background: var(--accent-2) !important; color: #FFFFFF !important; }
-
+        
         /* --- POP-UP 彈窗 --- */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 231, 219, 0.95); justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(5px); }
         .popup { background: #fff; padding: 40px 30px; border: 2px solid var(--accent-2); text-align: center; width: 85%; max-width: 420px; color: var(--accent-2); display: flex; flex-direction: column; align-items: center; }
         #result-title { font-size: 2rem; margin: 0 0 15px 0; color: var(--accent-2); letter-spacing: 2px; }
         #result-subtitle { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.5; color: var(--accent-2); font-weight: 500; }
-        #result-code { font-family: monospace; font-size: 1rem; color: #A52A2A; border: 1px dashed #A52A2A; padding: 5px 15px; margin-bottom: 25px; letter-spacing: 1px; background: rgba(165, 42, 42, 0.05); }
+        
+        /* [修改] 統一 #result-code 與 #result-code-2 樣式，並設定 inline-block 解決寬度問題 */
+        #result-code, #result-code-2 { 
+            font-family: monospace; 
+            font-size: 1rem; 
+            color: #A52A2A; 
+            border: 1px dashed #A52A2A; 
+            padding: 5px 15px; 
+            margin-bottom: 25px; 
+            letter-spacing: 1px; 
+            background: rgba(165, 42, 42, 0.05);
+            display: inline-block; /* 👈 關鍵：讓框框隨文字縮放 */
+        }
+
+        #result-subtitle-2 { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.5; color: var(--accent-2); font-weight: 500; }
+
+        /* --- 彈窗額外文字樣式 --- */
+        .extra-info-box {
+            margin-top: -10px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #555;
+            text-align: center;
+        }
+        .extra-info-box p { margin: 4px 0; }
 
         .action-area { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 0px; margin-bottom: 30px; width: 100%; flex-wrap: wrap; }
         .action-area .btn { min-width: 180px; padding: 10px 30px !important; }
@@ -146,24 +214,48 @@
         /* --- 手機版適配 --- */
         @media (max-width: 900px) {
             .page { padding: 40px 15px; }
-            .promo-envelope { display: block !important; width: 70px; height: 140px; z-index: 1 !important; }
+            .top-right-envelope { width: 110px; right: -10px; top: auto !important; bottom: 20%; }
             .env-left { left: -10px; top: 18%; }
-            .env-right { right: -10px; top: auto !important; bottom: 20%; }
-            .torn-label, h1.main-title, p.subtitle, .btn { position: relative; z-index: 10; }
-            h1.main-title { font-size: 2rem; margin-top: 50px !important; }
-            .torn-label { font-size: 1.2rem !important; }
-            .subtitle { font-size: 1rem; margin-top: 1.5rem; }
+            .torn-label-img { width: 80px; margin-bottom: 1rem; }
+            .main-title-img { width: 180px; margin-top: 10px; }
+            .subtitle-img { width: 280px; margin-top: 1rem; margin-bottom: 20px; }
+            .footer-text-img { width: 50px; margin-top: 15px; }
+            
+            .torn-label-img, .main-title-img, .subtitle-img, .footer-text-img, .btn { position: relative; z-index: 10; }
+            
             .btn { font-size: 1rem !important; padding: 10px 40px !important; }
             .envelope-container { flex-wrap: wrap; height: auto; margin-top: 10px; gap: 15px !important; padding-bottom: 40px; }
             .envelope-wrapper { width: 45%; height: 180px !important; }
             .envelope span { margin-top: 55px; font-size: 1.2rem; }
             #page5 h1 { margin-top: 50px !important; font-size: 1.6rem !important; width: 100%; }
-            .exhibition-wrapper { flex-direction: row !important; flex-wrap: nowrap !important; overflow-x: auto !important; justify-content: flex-start !important; gap: 20px !important; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
+            
+            .exhibition-wrapper { 
+                flex-direction: row !important; 
+                flex-wrap: nowrap !important; 
+                overflow-x: auto !important; 
+                justify-content: flex-start !important; 
+                gap: 20px !important; 
+                -webkit-overflow-scrolling: touch; 
+                scroll-snap-type: x mandatory; 
+                margin-top: 40px !important; 
+            }
+            
             .exhibition-item { flex: 0 0 85% !important; max-width: 320px !important; scroll-snap-align: center; }
             .popup { width: 85% !important; max-width: 360px !important; border-radius: 12px; }
             .bottom-left-image { width: 150px; bottom: 10px; left: 10px; animation: horseMotion 2.5s ease-in-out infinite; }
             .bottom-right-image { width: 150px; bottom: 10px; right: 10px; transform: scaleX(-1); animation: horseMotion 2.5s ease-in-out infinite; }
-            #page6 h2 { font-size: 1.8rem !important; }
+            
+            /* 第 6 頁上方標題 (手機版) */
+            #page6 h2 { 
+                font-size: 1.8rem !important; 
+                margin-top: -30px !important; 
+            }
+
+            /* 第 6 頁下方標題 (手機版) */
+            #page6 .shop-title-bottom {
+                font-size: 1.8rem !important;
+                margin-top: 40px !important; 
+            }
         }
     </style>
 </head>
@@ -178,12 +270,12 @@
 
     <div class="container">
         <div id="page1" class="page active">
-            <div class="promo-envelope env-right"><div class="seigaiha-decor pos-bottom-left"></div></div>
-            
-            <div class="torn-label font-serif">端傳媒新春限定</div>
-            <h1 class="main-title font-serif">好運加碼抽紅包</h1>
-            <p class="subtitle">2026/2/16 - 2/22<br>完成 3 題問答，即可獲得 1 次抽獎機會<br>最大獎 <span style="color: #F9544B; font-weight: bold;">折抵HK$500端傳媒線上商店免單券</span> 等你抽</p>
-            <button class="btn" onclick="startChallenge()">立即抽紅包</button>
+            <img src="https://20260216-lucky-envelope.theinitium.com/bg-1.png" class="top-right-envelope" alt="新春紅包">
+            <img src="https://20260216-lucky-envelope.theinitium.com/torn-label.png" alt="端傳媒新春限定" class="torn-label-img">
+            <img src="https://20260216-lucky-envelope.theinitium.com/main-title.png" class="main-title-img" alt="好運加碼抽紅包">
+            <img src="https://20260216-lucky-envelope.theinitium.com/subtitle.png" class="subtitle-img" alt="活動詳情">
+            <button class="btn" onclick="startChallenge()">馬上抽紅包</button>
+            <img src="https://20260216-lucky-envelope.theinitium.com/text-1.png" class="footer-text-img" alt="補充說明">
         </div>
 
         <div id="quiz-page" class="page">
@@ -196,7 +288,7 @@
 
         <div id="page5" class="page">
             <h1 class="font-serif" style="font-size: 2.2rem; letter-spacing: 4px; color: var(--btn-bg);">立即試手氣，選一個紅包</h1>
-            <p class="subtitle" style="margin-top: 1rem; margin-bottom: 20px;">限量1,000份新春好禮等你抽，最高抽折抵HK$500端傳媒線上商店免單券</p>
+            <p class="subtitle" style="margin-top: 1rem; margin-bottom: 20px; font-size: 1.1rem; color: var(--accent-2);">限量 1,000 份新春好禮等你抽，最高抽「線上商店全單100%折抵券」</p>
             <div class="envelope-container">
                 <div class="envelope-wrapper" onclick="drawPrize()"><div class="envelope"><span>馬上發財</span></div></div>
                 <div class="envelope-wrapper" onclick="drawPrize()"><div class="envelope"><span>馬上有錢</span></div></div>
@@ -207,33 +299,33 @@
         </div>
 
         <div id="page6" class="page">
-            <h2 class="font-serif" style="color:var(--accent-2); letter-spacing: 2px; margin-bottom: 0px; font-size: 2.2rem;"><span style="color: #F9544B;">春節限時免費讀</span></h2>
-            <p class="font-serif" style="font-size: 1.1rem; color: var(--accent-2); margin-bottom: 30px; letter-spacing: 1px; opacity: 0.8;">
-        端傳媒從情人節開始，緊接年廿八到大年初五、連續八天每天推出一篇免費閱讀文章，陪伴你過年
-    </p>
+            <h2 class="font-serif"><span style="color: #F9544B;">端傳媒線上商店</span></h2>
+            
             <div class="exhibition-wrapper">
                 <div class="exhibition-item">
-                    <img src="https://20260216-lucky-envelope.theinitium.com/article-1.webp" class="exhibition-img">
-                    <h3>從掩藏到擁抱──八仙焚身十年，她們與疤痕一起成長的愛情</h3>
-                    <p>「八仙對我們來說，不只是我一個人的創傷，也是他的。」</p>
-                    <a href="https://theinitium.com/20250718-taiwan-dust-fire-ten-years-love/" target="_blank" class="btn">限時免費讀</a>
+                    <img src="https://shop.theinitium.com/cdn/shop/files/murder-mock-Up-book.jpg?v=1755321940&width=600" class="exhibition-img">
+                    <h3>端傳媒經典報導小書</h3>
                 </div>
                 <div class="exhibition-item">
-                    <img src="https://20260216-lucky-envelope.theinitium.com/article-2.jpg" class="exhibition-img">
-                    <h3>站在各自的火線上，望向彼此：台灣Z世代女性的公共發聲現場</h3>
-                    <p>「只要持續公共參與，女性就會一直遇到性別問題。」</p>
-                    <a href="https://theinitium.com/20260121-taiwan-genz-women-speaking-out/" target="_blank" class="btn">限時免費讀</a>
+                    <img src="https://shop.theinitium.com/cdn/shop/files/sticker-mock-up.png?v=1755321224&width=600" class="exhibition-img">
+                    <h3>端傳媒周年語錄貼紙</h3>
                 </div>
                 <div class="exhibition-item">
-                    <img src="https://20260216-lucky-envelope.theinitium.com/article-3.webp" class="exhibition-img">
-                    <h3>評論｜ 人類命運不共同</h3>
-                    <p>人類命運共同體僅僅關乎於一個想象中的人類。</p>
-                    <a href="https://theinitium.com/20250904-opinion-human-community-and-world/" target="_blank" class="btn">限時免費讀</a>
+                    <img src="https://shop.theinitium.com/cdn/shop/files/postcard-mockup.png?v=1755321285&width=600" class="exhibition-img">
+                    <h3>端傳媒十年一瞬明信片</h3>
                 </div>
             </div>
+            
             <div class="action-area">
-                <a href="https://theinitium.com/tag/2026-lunar-new-year/" target="_blank" class="btn">看更多限時免費文章</a>
-                <a href="https://theinitium.com/20260216-lucky-envelope/" target="_blank" class="btn">查看活動辦法</a>
+                <a href="https://shop.theinitium.com/" target="_blank" class="btn">前往商店，選購周邊好禮</a>
+            </div>
+
+            <h2 class="font-serif shop-title-bottom"><span style="color: #F9544B;">春節限時免費讀</span></h2>
+            <p class="font-serif" style="font-size: 1.1rem; color: var(--accent-2); margin-bottom: 30px; letter-spacing: 1px; opacity: 0.8;">
+                端傳媒從情人節開始，緊接年廿八到大年初五、連續八天每天推出一篇免費閱讀文章，陪伴你過年
+            </p>
+            <div class="action-area" style="margin-top: 0;">
+                <a href="https://shop.theinitium.com/" target="_blank" class="btn">前往商店，選購周邊好禮</a>
             </div>
         </div>
     </div>
@@ -241,9 +333,20 @@
     <div id="overlay" class="overlay">
         <div class="popup">
             <h2 id="result-title" class="font-serif"></h2>
+            
             <div id="result-subtitle"></div>
             <div id="result-code"></div>
-            <button class="btn" onclick="switchPage('page6'); document.getElementById('overlay').style.display='none';">閱讀限時免費文章</button>
+            
+            <div id="second-prize-group" style="display:none; width: 100%;">
+                <div id="result-subtitle-2"></div>
+                <div id="result-code-2"></div>
+            </div>
+
+            <div id="result-extra-info" class="extra-info-box"></div>
+
+            <button id="btn-copy" class="btn btn-copy" onclick="copyResultCode()">複製代碼</button>
+
+            <button class="btn" onclick="switchPage('page6'); document.getElementById('overlay').style.display='none';">前往商店</button>
         </div>
     </div>
 
@@ -254,35 +357,36 @@
             { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["記者吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 }
         ];
 
-        // --- 正式版獎項權重設定 ---
+        // 權重調整版 (10:40:100:150:700) + 測試模式
         const prizeConfig = [
-            { id: 1, type: 'win', weight: 10, title: "｜金馬獎｜", subtitle: "線上商店免單券（最高折 HK$500）", code: "6HR6517Q2807" },
-            { id: 2, type: 'win', weight: 40, title: "｜金喜獎｜", subtitle: "線上商店全單 8 折券", code: "MV4RXJPA6B1H" },
-            { id: 3, type: 'win', weight: 100, title: "｜開春獎｜", subtitle: "線上商店 HK$80 折價券<br>（消費滿HK$400 才能使用）", code: "M19F3350VAYE" },
-            { id: 4, type: 'win', weight: 150, title: "｜好運獎｜", subtitle: "線上商店 9 折券", code: "X9XFA4PRF03E" },
-            { id: 5, type: 'win', weight: 700, title: "｜隨喜獎｜", subtitle: "線上商店 95 折券", code: "21DM9Q0G83SE" },
-            // 未中獎權重恢復為 8000
-            { id: 0, type: 'lose', weight: 8000, title: "｜未中獎｜", subtitle: "可惜沒有中獎～<br>端傳媒祝你新年快樂！", code: "" }
+            { 
+                id: 1, type: 'win', weight: 1, 
+                title: "｜金馬獎｜", 
+                subtitle: "恭喜你獲得最大獎：線上商店100%折抵券<br>最高折HK$500", 
+                code: "6HR6517Q2807", 
+                subtitle2: "結帳時請同時輸入下方「免運」折扣碼", // 第二組標題
+                code2: "BF7MQ8AK5Z0N", // 第二組代碼
+                text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看"
+            },
+            { id: 2, type: 'win', weight: 1, title: "｜金喜獎｜", subtitle: "恭喜你獲得：線上商店全單 8 折券", code: "MV4RXJPA6B1H", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
+            { id: 3, type: 'win', weight: 1, title: "｜開春獎｜", subtitle: "恭喜你獲得：線上商店 HK$80 折價券", code: "M19F3350VAYE", text1: "訂單滿 HK$400 即可折抵", text2: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
+            { id: 4, type: 'win', weight: 1, title: "｜好運獎｜", subtitle: "恭喜你獲得：線上商店 9 折券", code: "X9XFA4PRF03E", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
+            { id: 5, type: 'win', weight: 1, title: "｜隨喜獎｜", subtitle: "恭喜你獲得：線上商店 95 折券", code: "21DM9Q0G83SE", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
         ];
 
-        // --- 正式版 Key ---
-        const STORAGE_KEY = 'drawn_prize_2026_final_launch';
+        const STORAGE_KEY = 'drawn_prize_2026_test_weights';
 
         function drawPrize() {
-            // 1. 檢查是否已經玩過 (恢復檢查)
-            if (localStorage.getItem(STORAGE_KEY)) {
-                showAlreadyPlayedPopup();
-                return;
-            }
+            // 測試模式：暫不檢查 localStorage
+            // if (localStorage.getItem(STORAGE_KEY)) {
+            //     showAlreadyPlayedPopup();
+            //     return;
+            // }
 
-            // 2. 計算總權重
             let totalWeight = 0;
             prizeConfig.forEach(p => totalWeight += p.weight);
 
-            // 3. 隨機骰出一個數字
             let random = Math.random() * totalWeight;
-            
-            // 4. 找出對應的獎項
             let result = null;
             for (let i = 0; i < prizeConfig.length; i++) {
                 if (random < prizeConfig[i].weight) {
@@ -292,47 +396,73 @@
                 random -= prizeConfig[i].weight;
             }
 
-            // 5. 記錄已玩過 (恢復寫入)
-            localStorage.setItem(STORAGE_KEY, 'true');
+            // 測試模式：暫不寫入 localStorage
+            // localStorage.setItem(STORAGE_KEY, 'true');
 
-            // 6. 顯示結果
-            if (result.type === 'win') {
+            if (result && result.type === 'win') {
                 showWinPopup(result);
-            } else {
-                showNoWinPopup(result);
             }
         }
 
         function showWinPopup(win) {
             document.getElementById('result-title').innerText = win.title;
+            
+            // 第一組
             document.getElementById('result-subtitle').innerHTML = win.subtitle;
-            const codeElem = document.getElementById('result-code');
-            codeElem.innerText = win.code;
-            codeElem.style.display = 'block';
+            document.getElementById('result-code').innerText = win.code;
+            document.getElementById('result-code').style.display = 'inline-block'; // 修改為 inline-block
+
+            // 處理第二組獎項
+            const secondGroup = document.getElementById('second-prize-group');
+            if (win.code2) {
+                document.getElementById('result-subtitle-2').innerHTML = win.subtitle2;
+                document.getElementById('result-code-2').innerText = win.code2;
+                secondGroup.style.display = 'block';
+            } else {
+                secondGroup.style.display = 'none';
+            }
+
+            let extraHtml = '';
+            if (win.text1) extraHtml += `<p>${win.text1}</p>`;
+            if (win.text2) extraHtml += `<p>${win.text2}</p>`;
+            document.getElementById('result-extra-info').innerHTML = extraHtml;
+            document.getElementById('result-extra-info').style.display = 'block';
+
+            const copyBtn = document.getElementById('btn-copy');
+            copyBtn.style.display = 'inline-block'; 
+            copyBtn.innerText = '複製代碼'; 
+
             updateOverlayBtn();
             document.getElementById('overlay').style.display = 'flex';
         }
 
-        function showNoWinPopup(lose) {
-            document.getElementById('result-title').innerText = lose.title; 
-            document.getElementById('result-subtitle').innerHTML = lose.subtitle;
-            document.getElementById('result-code').style.display = 'none';
-            updateOverlayBtn();
-            document.getElementById('overlay').style.display = 'flex';
-        }
-
-        function showAlreadyPlayedPopup() {
-            document.getElementById('result-title').innerText = "💡活動提醒💡";
-            document.getElementById('result-subtitle').innerText = "每人僅限抽獎一次，您已經參加過活動囉！";
-            document.getElementById('result-code').style.display = 'none';
-            updateOverlayBtn();
-            document.getElementById('overlay').style.display = 'flex';
+        function copyResultCode() {
+            const code1 = document.getElementById('result-code').innerText;
+            if(!code1) return;
+            
+            const code2Elem = document.getElementById('result-code-2');
+            let textToCopy = code1;
+            
+            if (document.getElementById('second-prize-group').style.display !== 'none' && code2Elem.innerText) {
+                textToCopy = code1 + '\n' + code2Elem.innerText;
+            }
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('btn-copy');
+                btn.innerText = "已複製！";
+                setTimeout(() => {
+                    btn.innerText = "複製代碼";
+                }, 2000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動複製');
+            });
         }
 
         function updateOverlayBtn() {
-            const btn = document.querySelector('#overlay .btn');
+            const btn = document.querySelector('#overlay .btn:last-child');
             if(btn) {
-                btn.innerText = "閱讀限時免費文章";
+                btn.innerText = "前往商店";
                 btn.onclick = function() { switchPage('page6'); document.getElementById('overlay').style.display='none'; };
             }
         }
