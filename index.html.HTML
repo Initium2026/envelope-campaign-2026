@@ -295,14 +295,11 @@
             /* 下方標題位置 */
             #page6 .shop-title-bottom { margin-top: 0px !important; }
             /* 第 6 頁說明文字 */
-            #page6 p { 
-                font-size: 0.7rem !important; 
-                width: 85% !important;/* 限制寬度，讓文字自動斷行 */
-                margin: 0 auto 30px auto !important; /* 讓文字區塊維持水平置中 */
-            }
-            
+            #page6 p { font-size: 0.7rem !important; }
+            width: 85% !important;/* 限制寬度，讓文字自動斷行 */
+            margin: 0 auto 30px auto !important; /* 讓文字區塊維持水平置中 */
             /* 櫥窗內標題 */
-            .exhibition-item h3 { font-size: 0.5rem !important; }
+            .exhibition-item h3 { font-size: 0.1rem !important; }
 
             /* --- 手機版問答頁面調整 --- */
             #quiz-page {
@@ -401,12 +398,7 @@
                 <a href="https://shop.theinitium.com/" target="_blank" class="btn">前往商店，選購周邊好禮</a>
             </div>
 
-            <h2 class="font-serif shop-title-bottom"><span style="color: #F9544B;">春節限時免費讀</span></h2>
-            <p class="font-serif" style="font-size: 1.1rem; color: var(--accent-2); margin-bottom: 30px; letter-spacing: 1px; opacity: 0.8;">
-                端傳媒從情人節開始，緊接年廿八到大年初五、連續八天<br class="mobile-br">每天推出一篇免費閱讀文章，陪伴你過年
-            </p>
-            <div class="action-area" style="margin-top: 0;">
-                <a href="https://theinitium.com/tag/2026-lunar-new-year/" target="_blank" class="btn">看更多限時免費報導</a>
+           
             </div>
         </div>
     </div>
@@ -434,123 +426,38 @@
     <script>
         const quizData = [
             { "q": "2026年歲次是什麼？", "a": ["龍年", "蛇年", "馬年", "羊年"], "correct": 2 },
-            { "q": "以下對於端傳媒的敘述，哪一個不是正確的？", "a": ["邁向成立第11年", "端的讀者遍布全球100+個國家與地區", "2025年榮獲29項新聞獎", "以上皆正確"], "correct": 3 },
-            { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["編輯吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 }
+            { "q": "以下對於端傳媒的敘述，哪一個不是正確的？", "a": ["邁向成立第11年", "端的讀者遍布全球100+個國家與地區", "2025年榮獲29項新聞獎", "以上皆是"], "correct": 3 },
+            { "q": "哪一位不是端傳媒「未完結現場」計畫的共同策展人？", "a": ["記者吳政霆", "編輯許伯崧", "編輯李慧筠", "以上皆是"], "correct": 3 }
         ];
 
-        // 權重調整版 (10:40:100:150:700) + 測試模式
-        const prizeConfig = [
-            { 
-                id: 1, type: 'win', weight: 10, 
-                title: "｜金馬獎｜", 
-                subtitle: "恭喜你獲得最大獎：線上商店100%折抵券<br>最高折HK$500", 
-                code: "6HR6517Q2807", 
-                subtitle2: "結帳時請同時輸入下方「免運」折扣碼", // 第二組標題
-                code2: "BF7MQ8AK5Z0N", // 第二組代碼
-                text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看"
-            },
-            { id: 2, type: 'win', weight: 40, title: "｜金喜獎｜", subtitle: "恭喜你獲得：線上商店全單 8 折券", code: "MV4RXJPA6B1H", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
-            { id: 3, type: 'win', weight: 100, title: "｜開春獎｜", subtitle: "恭喜你獲得：線上商店 HK$80 折價券", code: "M19F3350VAYE", text1: "訂單滿 HK$400 即可折抵", text2: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
-            { id: 4, type: 'win', weight: 150, title: "｜好運獎｜", subtitle: "恭喜你獲得：線上商店 9 折券", code: "X9XFA4PRF03E", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
-            { id: 5, type: 'win', weight: 700, title: "｜隨喜獎｜", subtitle: "恭喜你獲得：線上商店 95 折券", code: "21DM9Q0G83SE", text1: "請立即截圖或複製儲存折扣碼，離開本頁面後將無法再次查看" },
-        ];
-
-        const STORAGE_KEY = 'drawn_prize_2026_real_weights';
+        // 1. 移除原本獎項，改放活動結束配置
+        const endConfig = {
+            title: "抽紅包活動已結束",
+            subtitle: "感謝你的支持！<br>雖然活動結束了，但你仍然可以前往<br>端的線上商店逛逛"
+        };
 
         function drawPrize() {
-            // [修改] 啟用一人限抽一次的檢查
-            if (localStorage.getItem(STORAGE_KEY)) {
-                showAlreadyPlayedPopup();
-                return;
-            }
-
-            let totalWeight = 0;
-            prizeConfig.forEach(p => totalWeight += p.weight);
-
-            let random = Math.random() * totalWeight;
-            let result = null;
-            for (let i = 0; i < prizeConfig.length; i++) {
-                if (random < prizeConfig[i].weight) {
-                    result = prizeConfig[i];
-                    break;
-                }
-                random -= prizeConfig[i].weight;
-            }
-
-            // [修改] 抽獎成功後記錄狀態
-            localStorage.setItem(STORAGE_KEY, 'true');
-
-            if (result && result.type === 'win') {
-                showWinPopup(result);
-            }
+            // 4. 取消「每人只能抽一次」的規則限制 (已移除 localStorage 檢查)
+            // 直接顯示活動結束的彈窗
+            showWinPopup(endConfig);
         }
 
         function showWinPopup(win) {
             document.getElementById('result-title').innerText = win.title;
             
-            // 第一組
+            // 2. 改放活動結束的內容 (包含斷行)
             document.getElementById('result-subtitle').innerHTML = win.subtitle;
-            document.getElementById('result-code').innerText = win.code;
-            document.getElementById('result-code').style.display = 'inline-block'; // 修改為 inline-block
-
-            // 處理第二組獎項
-            const secondGroup = document.getElementById('second-prize-group');
-            if (win.code2) {
-                document.getElementById('result-subtitle-2').innerHTML = win.subtitle2;
-                document.getElementById('result-code-2').innerText = win.code2;
-                secondGroup.style.display = 'block';
-            } else {
-                secondGroup.style.display = 'none';
-            }
-
-            let extraHtml = '';
-            if (win.text1) extraHtml += `<p>${win.text1}</p>`;
-            if (win.text2) extraHtml += `<p>${win.text2}</p>`;
-            document.getElementById('result-extra-info').innerHTML = extraHtml;
-            document.getElementById('result-extra-info').style.display = 'block';
-
-            const copyBtn = document.getElementById('btn-copy');
-            copyBtn.style.display = 'inline-block'; 
-            copyBtn.innerText = '複製代碼'; 
-
-            updateOverlayBtn();
-            document.getElementById('overlay').style.display = 'flex';
-        }
-
-        // [新增] 顯示「已抽過」的彈窗邏輯
-        function showAlreadyPlayedPopup() {
-            document.getElementById('result-title').innerText = "💡活動提醒💡";
-            document.getElementById('result-subtitle').innerText = "每人僅限抽獎一次，\n你已經參加過活動囉！";
+            
+            // 隱藏所有不需要的折扣碼區塊與說明
             document.getElementById('result-code').style.display = 'none';
             document.getElementById('second-prize-group').style.display = 'none';
             document.getElementById('result-extra-info').style.display = 'none';
-            document.getElementById('btn-copy').style.display = 'none';
-            
+
+            // 3. 按鈕請只保留「前往商店」 (隱藏複製代碼按鈕)
+            document.getElementById('btn-copy').style.display = 'none'; 
+
             updateOverlayBtn();
             document.getElementById('overlay').style.display = 'flex';
-        }
-
-        function copyResultCode() {
-            const code1 = document.getElementById('result-code').innerText;
-            if(!code1) return;
-            
-            const code2Elem = document.getElementById('result-code-2');
-            let textToCopy = code1;
-            
-            if (document.getElementById('second-prize-group').style.display !== 'none' && code2Elem.innerText) {
-                textToCopy = code1 + '\n' + code2Elem.innerText;
-            }
-            
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const btn = document.getElementById('btn-copy');
-                btn.innerText = "已複製！";
-                setTimeout(() => {
-                    btn.innerText = "複製代碼";
-                }, 2000);
-            }).catch(err => {
-                console.error('複製失敗:', err);
-                alert('複製失敗，請手動複製');
-            });
         }
 
         function updateOverlayBtn() {
@@ -588,6 +495,3 @@
     </script>
 </body>
 </html>
-
-
-
